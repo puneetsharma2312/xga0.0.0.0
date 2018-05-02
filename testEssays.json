@@ -194,6 +194,33 @@
 						"title": "Content",
 						"type": "string",
 						"input": "textarea"
+					},
+					{
+						"name": "document",
+						"type": "string"
+					},
+					{
+						"name": "approval",
+						"type": "string",
+						"default": "false"
+					}
+				]
+			},
+			{
+				"name": "users_college_info",
+				"type": "collection",
+				"fields": [
+					{
+						"name": "schoolNames",
+						"type": "string"
+					},
+					{
+						"name": "whySchool",
+						"type": "string"
+					},
+					{
+						"name": "message",
+						"type": "string"
 					}
 				]
 			}
@@ -320,6 +347,26 @@
 				"find_one": true,
 				"filter": "{\"_id\":\":essayId\"}",
 				"options": "{}"
+			},
+			{
+				"name": "college_list",
+				"collection": "users_college_info",
+				"filter": "{}",
+				"options": "{}"
+			},
+			{
+				"name": "colleges_null",
+				"collection": "users_college_info",
+				"find_one": true,
+				"filter": "{\"_id\":null}",
+				"options": "{}"
+			},
+			{
+				"name": "college",
+				"collection": "users_college_info",
+				"find_one": true,
+				"filter": "{\"_id\":\":collegeId\"}",
+				"options": "{}"
 			}
 		],
 		"free_zone": {
@@ -366,6 +413,18 @@
 						}
 					],
 					"template_rendered_code": "$('section, .jumbotron').css('min-height', $(window).height()/2 + 'px'); window.scrollTo(0, 0);"
+				},
+				{
+					"name": "fbtest",
+					"type": "page",
+					"components": [
+						{
+							"name": "fb_component",
+							"type": "custom_component",
+							"custom_template": "files/fb_page",
+							"object_type": "custom_component"
+						}
+					]
 				}
 			]
 		},
@@ -377,12 +436,6 @@
 					"type": "menu",
 					"dest_selector": "#menu",
 					"class": "nav navbar-nav",
-					"items": [
-						{
-							"title": "Home",
-							"route": "home_public"
-						}
-					],
 					"object_type": "menu"
 				},
 				{
@@ -437,12 +490,6 @@
 					"type": "menu",
 					"dest_selector": "#menu",
 					"class": "nav navbar-nav",
-					"items": [
-						{
-							"title": "Home",
-							"route": "home_public"
-						}
-					],
 					"object_type": "menu"
 				},
 				{
@@ -452,17 +499,13 @@
 					"class": "nav navbar-nav navbar-right",
 					"items": [
 						{
+							"title": "Dashboard",
+							"route": "home_dash"
+						},
+						{
 							"title": "Admin",
 							"route": "admin",
 							"icon_class": "fa fa-wrench"
-						},
-						{
-							"title": "All Essays",
-							"route": "essays"
-						},
-						{
-							"title": "My Essays",
-							"route": "essays"
 						},
 						{
 							"title": "{{userEmail}}",
@@ -1130,9 +1173,121 @@
 					"name": "logout",
 					"type": "page",
 					"template": "logout"
+				},
+				{
+					"name": "colleges",
+					"type": "page",
+					"components": [
+						{
+							"name": "view",
+							"type": "data_view",
+							"title": "Colleges",
+							"query_name": "college_list",
+							"insert_route": "colleges.insert",
+							"details_route": "colleges.details",
+							"edit_route": "colleges.update",
+							"details_route_params": [
+								{
+									"name": "collegeId",
+									"value": "this._id"
+								}
+							],
+							"edit_route_params": [
+								{
+									"name": "collegeId",
+									"value": "this._id"
+								}
+							],
+							"object_type": "data_view"
+						}
+					],
+					"pages": [
+						{
+							"name": "details",
+							"type": "page",
+							"components": [
+								{
+									"name": "form",
+									"type": "form",
+									"title": "College Details",
+									"query_name": "college",
+									"mode": "read_only",
+									"close_route": "colleges",
+									"back_route": "colleges",
+									"object_type": "form"
+								}
+							],
+							"route_params": [
+								"collegeId"
+							]
+						},
+						{
+							"name": "insert",
+							"type": "page",
+							"components": [
+								{
+									"name": "form",
+									"type": "form",
+									"title": "New College",
+									"query_name": "colleges_null",
+									"mode": "insert",
+									"submit_route": "colleges",
+									"cancel_route": "colleges",
+									"object_type": "form"
+								}
+							]
+						},
+						{
+							"name": "update",
+							"type": "page",
+							"components": [
+								{
+									"name": "form",
+									"type": "form",
+									"title": "Edit College",
+									"query_name": "college",
+									"mode": "update",
+									"submit_route": "colleges",
+									"cancel_route": "colleges",
+									"object_type": "form"
+								}
+							],
+							"route_params": [
+								"collegeId"
+							]
+						}
+					]
+				},
+				{
+					"name": "dashboard_page",
+					"type": "page",
+					"components": [
+						{
+							"name": "dash_view",
+							"type": "data_view",
+							"query_name": "college_list",
+							"object_type": "data_view"
+						}
+					]
+				},
+				{
+					"name": "home_dash",
+					"type": "page",
+					"components": [
+						{
+							"name": "home_dash_dv",
+							"type": "data_view",
+							"query_name": "essay_list",
+							"object_type": "data_view"
+						}
+					]
 				}
-			]
+			],
+			"default_route": "home_dash"
 		},
+		"login_with_google": true,
+		"login_with_facebook": true,
+		"login_with_twitter": true,
 		"copy_files": [
 			{
 				"source": "files/styles.css",
@@ -1145,7 +1300,103 @@
 			{
 				"source": "files/home1.jpeg",
 				"dest": "PUBLIC_IMAGES_DIR/home1.jpeg"
+			},
+			{
+				"source": "files/custom/details.html",
+				"dest": "CLIENT_VIEWS_DIR/essays/details/details.html"
+			},
+			{
+				"source": "files/custom/essays.html",
+				"dest": "CLIENT_VIEWS_DIR/essays/essays.html"
+			},
+			{
+				"source": "files/custom/insert.html",
+				"dest": "CLIENT_VIEWS_DIR/essays/insert/insert.html"
+			},
+			{
+				"source": "files/custom/insert.js",
+				"dest": "CLIENT_VIEWS_DIR/essays/insert/insert.js"
+			},
+			{
+				"source": "files/custom/update.html",
+				"dest": "CLIENT_VIEWS_DIR/essays/update/update.html"
+			},
+			{
+				"source": "files/custom/update.js",
+				"dest": "CLIENT_VIEWS_DIR/essays/update/update.js"
+			},
+			{
+				"source": "files/custom/dashboard_page.js",
+				"dest": "CLIENT_VIEWS_DIR/dashboard_page/dashboard_page.js"
+			},
+			{
+				"source": "files/custom/users_college_info.js",
+				"dest": "BOTH_LIB_DIR/users_college_info.js"
+			},
+			{
+				"source": "files/custom/essays.js",
+				"dest": "BOTH_COLLECTIONS_DIR/essays.js"
+			},
+			{
+				"source": "files/custom/dashboard_page.html",
+				"dest": "CLIENT_VIEWS_DIR/dashboard_page/dashboard_page.html"
+			},
+			{
+				"source": "files/custom/styles.less",
+				"dest": "CLIENT_STYLES_DIR/styles/styles.less"
+			},
+			{
+				"source": "files/custom/home_dash.js",
+				"dest": "CLIENT_VIEWS_DIR/home_dash/home_dash.js"
+			},
+			{
+				"source": "files/custom/home_dash.css",
+				"dest": "CLIENT_VIEWS_DIR/home_dash/home_dash.css"
+			},
+			{
+				"source": "files/custom/home_dash_controller.js",
+				"dest": "CLIENT_VIEWS_DIR/home_dash/home_dash_controller.js"
+			},
+			{
+				"source": "files/custom/home_dash.html",
+				"dest": "CLIENT_VIEWS_DIR/home_dash/home_dash.html"
+			},
+			{
+				"source": "files/custom/styles.css",
+				"dest": "CLIENT_STYLES_DIR/styles.css"
+			},
+			{
+				"source": "files/custom/home_public.html",
+				"dest": "CLIENT_VIEWS_DIR/home_public/home_public.html"
+			},
+			{
+				"source": "files/custom/publish/users_college_info.js",
+				"dest": "SERVER_PUBLISH_DIR/users_college_info.js"
+			},
+			{
+				"source": "files/custom/wizard-bootsrap-step/wizard-bootstrap-steps.less",
+				"dest": "CLIENT_LIB_DIR/wizard-bootsrap-step/wizard-bootstrap-steps.less"
+			},
+			{
+				"source": "files/custom/wizard-bootsrap-step/wizard-bootstrap-steps.js",
+				"dest": "CLIENT_LIB_DIR/wizard-bootsrap-step/wizard-bootstrap-steps.js"
+			},
+			{
+				"source": "files/custom/wizard-bootsrap-step/wizard-bootstrap-steps.html",
+				"dest": "CLIENT_LIB_DIR/wizard-bootsrap-step/wizard-bootstrap-steps.html"
 			}
-		]
+		],
+		"packages": {
+			"meteor": [
+				"teamon:tinymce",
+				"aldeed:autoform",
+				"aldeed:collection2",
+				"forwarder:autoform-wizard",
+				"forwarder:autoform-wizard-iron-router"
+			],
+			"npm": [
+				"simpl-schema"
+			]
+		}
 	}
 }
