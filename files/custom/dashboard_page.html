@@ -1,0 +1,53 @@
+<template name="DashboardPage">
+
+	<div class="row" id="title_row">
+			<div class="col-md-12">
+			</div>
+		</div>
+<!-- {{wizardId}}
+ -->
+
+<div class="row" id="title_row">
+			<div class="col-md-12">
+			</div>
+		</div>
+
+	<div class="page-container container"  >
+		<div class="row" id="title_row">
+			<div class="col-md-12">
+
+	  {{> wizard id="basic"  steps=steps  stepsTemplate="steps_bootstrap3" doc=step.data buttonClasses="btn btn-primary"}}
+			</div>
+		</div>
+	</div>
+
+	<!-- <table class="table table-striped">
+		<thead>
+			<tr>
+				<th>UserName</th>
+				<th>address</th>
+				
+			</tr>
+		</thead>
+		<tbody>
+			{{#each books}}
+				<tr style="color: {{color}};">
+					<td>{{schoolNames}}</td>
+					<td>{{whySchool}}</td>
+										<td>{{message}}</td>
+
+					
+					<td><input type="button" class="btn btn-primary open-update-modal" value="Update" name="update"></td>
+				
+				</tr>
+			{{/each}}
+		</tbody>
+	</table> -->
+</template>
+
+
+<template name="staffUpdate">
+    <h2>Update Form</h2>
+
+    {{> wizard id="staffUpdate" steps=steps stepsTemplate="steps_bootstrap3" clearOnDestroy=true buttonClasses="btn btn-primary"}}
+</template>

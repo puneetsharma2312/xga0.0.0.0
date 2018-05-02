@@ -1,0 +1,228 @@
+<template name="HomeDash">
+
+	
+	<div class="page-container container" id="content">
+		<div class="row" id="title_row">
+			<div class="col-md-12">
+			</div>
+		</div>
+        <h2 id="component-title">
+            
+        </h2>
+
+		  {{#if isAdmin}}  
+		  {{> AdminDash}}
+
+	 {{> Essays}}
+
+
+		{{else}} 
+	 
+					{{> HomeDashHomeDashDv}}
+					
+		{{/if}}
+
+
+
+
+
+	</div>
+</template>
+
+
+
+<template name="AdminDash">
+
+
+ <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-comments fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge"> {{userCount}}</div>
+
+                                    <div>Users!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="admin/users">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-tasks fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">{{essayCount}}</div>
+                                    <div>Essays!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+               <!--  <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-shopping-cart fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">4</div>
+                                    <div>Pending approval!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div> -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-support fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">3</div>
+                                    <div>Pending approval!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+</template>
+
+
+
+
+
+<template name="HomeDashHomeDashDv">
+	<div id="home-dash-home-dash-dv" class="">
+		<!-- <form id="dataview-controls" class="form-inline">
+			<div id="dataview-controls-search">
+				<div id="dataview-controls-search-group" class="input-group">
+					<input type="text" class="form-control" id="dataview-search-input" placeholder="Search" name="search" value="{{searchString}}" autofocus="autofocus">
+					<span class="input-group-btn">
+						<button type="button" id="dataview-search-button" class="btn btn-primary">
+							<span class="fa fa-search">
+							</span>
+						</button>
+					</span>
+				</div>
+			</div>
+		</form> -->
+		{{#if isNotEmpty}}
+			{{#if isNotFound}}
+		<div class="alert alert-warning">
+			"{{searchString}}" not found.
+		</div>
+		{{else}}
+		<div id="dataview-data">
+
+<div  class="call-to-action">
+    <div class="container">
+        <div class="row">
+    	    <div class=" text-center m-text-center">
+                 <div class="call-to-action-h1">Your submission is under review! </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+
+ 		</div>
+        {{> Essays}}
+
+		{{/if}}
+		{{else}}
+	
+
+<div  class="call-to-action">
+    <div class="container">
+        <div class="row">
+    	    <div class="col-md-8 col-sm-8 text-center m-text-center">
+                 <div class="call-to-action-h1">Grab 50$ coupon. Submit your essay Now! </div>
+            </div>
+             <div class="col-md-4 col-sm-4 m-text-center">
+                <a class="btn btn-white" href="dashboard_page">Start</a> 
+            </div>
+        </div>
+    </div>
+</div>
+		{{/if}}
+	</div>
+</template>
+
+<template name="HomeDashHomeDashDvTable">
+	<table id="dataview-table" class="table table-striped">
+		<thead id="dataview-table-header">
+			<tr id="dataview-table-header-row">
+				<th class="th-sortable" data-sort="title">
+					Title
+				</th>
+				<th class="th-sortable" data-sort="Content">
+					Content
+				</th>
+				<th class="th-sortable" data-sort="document">
+					document
+				</th>
+			</tr>
+		</thead>
+		<tbody id="dataview-table-items">
+			{{#each tableItems}} {{> HomeDashHomeDashDvTableItems}} {{/each}}
+		</tbody>
+	</table>
+</template>
+
+<template name="HomeDashHomeDashDvTableItems">
+	<tr id="dataview-table-items-row">
+		<td>
+			{{title}}
+		</td>
+		<td>
+			{{Content}}
+		</td>
+		<td>
+			{{document}}
+		</td>
+	</tr>
+</template>
+
