@@ -425,6 +425,32 @@
 							"object_type": "custom_component"
 						}
 					]
+				},
+				{
+					"name": "readblog",
+					"type": "page",
+					"query_name": "essay",
+					"query_params": [
+						{
+							"name": "essayId",
+							"value": " Reads value from URL (route param) "
+						}
+					],
+					"components": [
+						{
+							"name": "readblog_component",
+							"type": "custom_component",
+							"custom_template": "files/blogs",
+							"query_name": "essay",
+							"query_params": [
+								{
+									"name": "essayId",
+									"value": " Reads value from URL (route param) "
+								}
+							],
+							"object_type": "custom_component"
+						}
+					]
 				}
 			]
 		},
@@ -1384,7 +1410,24 @@
 			{
 				"source": "files/custom/wizard-bootsrap-step/wizard-bootstrap-steps.html",
 				"dest": "CLIENT_LIB_DIR/wizard-bootsrap-step/wizard-bootstrap-steps.html"
+			},
+			{
+				"source": "files/custom/home_public.js",
+				"dest": "CLIENT_VIEWS_DIR/home_public/home_public.js"
+			},
+			{
+				"source": "files/custom/readblog_controller.js",
+				"dest": "CLIENT_VIEWS_DIR/readblog/readblog_controller.js"
+			},
+			{
+				"source": "files/custom/readblog.js",
+				"dest": "CLIENT_VIEWS_DIR/readblog/readblog.js"
+			},
+			{
+				"source": "files/custom/router.js",
+				"dest": "CLIENT_VIEWS_DIR/router.js"
 			}
+			
 		],
 		"packages": {
 			"meteor": [
@@ -1400,3 +1443,4 @@
 		}
 	}
 }
+
